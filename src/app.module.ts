@@ -1,21 +1,16 @@
-import { User } from './users/entities/user.entity';
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
+import { MongooseModule } from '@nestjs/mongoose';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type :"sqlite",
-      database: "DB.sqlite",
-      entities: [__dirname + "/**/*.entity{.ts,.js}", User],
-      synchronize: true,
-    }),
+    MongooseModule.forRoot('mongodb://127.0.0.1:27017/address_book'),
     UsersModule,
+    AuthModule,
   ],
-  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
